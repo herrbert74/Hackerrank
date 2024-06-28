@@ -11,27 +11,16 @@ package com.hackerrank.problemsolving
 
 fun getTotalX(a: Array<Int>, b: Array<Int>): Int {
 	val lcm = lcm(a.toIntArray())
-	println(lcm)
-	val fullSet = mutableSetOf(a.last(), b[0], lcm)
-	val filteredSet = mutableSetOf<Int>()
-	for (i in b) {
-		for (j in a) {
-			fullSet.add(lcm*j)
-			if (i.rem(j) == 0) fullSet.add(i / j)
+	val gcd = gcd(b.toIntArray())
+	var multiple = lcm
+	var count = 0
+	while (multiple <= gcd) {
+		if (gcd.rem(multiple) == 0) {
+			count++
 		}
+		multiple += lcm
 	}
-	test@ for (x in fullSet) {
-		for (i in a) {
-			if (x.rem(i) != 0) continue@test
-		}
-		for (j in b) {
-			if (j.rem(x) != 0) continue@test
-		}
-		filteredSet.add(x)
-	}
-	println(fullSet)
-	println(filteredSet)
-	return filteredSet.size
+	return count
 
 }
 
